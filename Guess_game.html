@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess_Game</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "poppins";
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        #main {
+            width: 100%;
+            height: 100%;
+            background-color: rgb(202, 238, 202);
+            justify-content: center;
+            align-items: center;
+            display: flex;
+        }
+
+        #panel {
+            width: 80%;
+            height: 80%;
+            border-radius: 10px;
+            background-color: white;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #ptop {
+            padding: 0 20%;
+            width: 100%;
+            height: 70px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #fff;
+            background-color: rgb(72, 104, 72);
+        }
+
+        .ele h4 {
+            font-weight: 100;
+        }
+
+        .box {
+            padding: 10px 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            text-align: center;
+            color: rgb(72, 104, 72);
+        }
+
+        .ele {
+            display: flex;
+            text-align: center;
+            align-items: center;
+            gap: 20px;
+            font-size: 25px;
+        }
+
+        #pbody {
+            width: 100%;
+            height: calc(100% - 70px);
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: hidden;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .bubble {
+            width: 50px;
+            height: 50px;
+            background-color: rgb(72, 104, 72);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+            justify-content: center;
+            color: #fff;
+            font-weight: 500;
+        }
+        .bubble:hover {
+            cursor: pointer;
+            background-color: rgb(50, 75, 50);
+        }
+        .pbtn{
+            width: 100%;
+            height:calc(100% - 70px);
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            
+        }
+        .start-div button , .exit-div button{
+            width: 150px;
+            height: 50px;
+            font-size: 30px;
+            border: none;
+            background-color: rgb(62, 138, 62);
+            color:#fff;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0px 4px 6px rgba(233, 228, 228, 0.4);
+            transition: box-shadow 0.3s ease transform 0.3s ease;
+        }
+        .start-div button:hover , .exit-div button:hover{
+            box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.6);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main">
+        <div id="panel">
+            <div id="ptop">
+                <div class="ele">
+                    <h4>Hit</h4>
+                    <div id="hitval" class="box">0</div>
+                </div>
+                <div class="ele">
+                    <h4>Timer</h4>
+                    <div id="timerval" class="box">30</div>
+                </div>
+                <div class="ele">
+                    <h4>Score</h4>
+                    <div id="score" class="box">0</div>
+                </div>
+            </div>
+            <div id="pbody">
+            </div>
+            <div class="pbtn">
+                <div class="start-div"><button id="start">START</button></div>
+                <div class="exit-div"><button id="exit">EXIT</button></div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let Score = 0
+        let timer = 30
+        let new_hit  
+        document.querySelector("#pbody").style.display = "none"
+        document.querySelector("#pbody" , function(){
+
+        })
+        //bubble make function 
+        function bubblemake() {
+            let a = ""
+            for (let i = 1; i <= 133; i++) {
+                let num = Math.floor(Math.random() * 10)
+                a += `<div class="bubble">${num}</div>`
+            }
+            document.querySelector("#pbody").innerHTML = a
+        }
+        
+        function runtimer() {
+            setInterval(function () {
+                if (timer > 0) {
+                    timer--
+                    document.querySelector("#timerval").innerHTML = timer
+                }
+                else {
+                    document.querySelector("#pbody").innerHTML = `<h1 style="font-weight:200">Game Over<br>Score : ${Score}</h1>`
+                    clearInterval()
+                }
+            }, 1000)
+        }
+       
+        function newhit() {
+            new_hit = Math.floor(Math.random() * 10)
+            document.querySelector("#hitval").innerHTML = new_hit
+        }
+        
+        console.log(new_hit);
+        
+        function increasescore()
+        {
+            Score += 10
+            document.querySelector("#score").innerHTML = Score
+        }
+        document.querySelector("#start").addEventListener("click" , function(){
+            newhit()
+            runtimer()
+            document.querySelector("#pbody").style.display = ""
+            document.querySelector("pbtn").style.display = ""
+
+            
+        })
+        bubblemake()
+        document.querySelector("#pbody").addEventListener("click" , function(er){
+            let clicknum = (Number(er.target.innerHTML));
+            if(clicknum === new_hit)
+        {   
+            increasescore()
+            bubblemake()
+            newhit()
+        }
+            
+        })
+
+
+
+
+    </script>
+</body>
+
+</html>
